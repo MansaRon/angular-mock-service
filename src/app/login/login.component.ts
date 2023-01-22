@@ -19,9 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      username: ['', Validators.required, 
-      Validators.email, 
-      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
+      username: ['', Validators.required, Validators.email],
       password: ['', Validators.required]
     });
   }
@@ -32,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     if (this.form.invalid) {return;}
-
+    console.log(this.form.value.password);
     this.loading = true;
     this.accountService.login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
@@ -42,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {
+          console.log(error);
           alert(error);
           this.loading = false;
         }
